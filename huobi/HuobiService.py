@@ -4,21 +4,25 @@ import time
 
 import requests
 
-from huobi.Util import *
+from Util import *
+#from huobi.Util import *
 
 
 '''
 获取账号详情
 '''
 def getAccountInfo(method):
-    timestamp = long(time.time())
+    print('----')
+    timestamp = int(time.time())
+    #timestamp = long(time.time())
     params = {"access_key": ACCESS_KEY,"secret_key": SECRET_KEY, "created": timestamp,"method":method}
     sign=signature(params)
     params['sign']=sign
 
     del params['secret_key']
 
-    payload = urllib.urlencode(params)
+    payload = urllib.parse.urlencode(params)
+    #payload = urllib.urlencode(params)
     r = requests.post(HUOBI_SERVICE_API, params=payload)
     if r.status_code == 200:
         data = r.json()
